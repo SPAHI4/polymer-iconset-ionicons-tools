@@ -1,0 +1,13 @@
+{
+  "name": "core-iconset-ionicons-generator",
+  "version": "0.0.1",
+  "description": "Generates core-iconset-ionicons",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jade": "^1.9.2",
+    "xml2js": "^0.4.8"
+  },
+  "author": "Antono Vasiljev <antono.vasiljev@gmail.com>",
+  "license": "MIT"
+}

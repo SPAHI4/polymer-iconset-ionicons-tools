@@ -1,0 +1,14 @@
+doctype html
+//
+  Ionicons iconset for polymer
+  https://github.com/antono/core-iconset-ionicons
+
+link(rel='import', href='../core-icon/core-icon.html')
+link(rel='import', href='../core-iconset-svg/core-iconset-svg.html')
+  
+core-iconset-svg(id=iconsetId iconsize=defaultIconSize)
+  svg
+    defs
+      each g in glyphs
+        g(id=g['glyph-name'])
+          path(d=g.d)
