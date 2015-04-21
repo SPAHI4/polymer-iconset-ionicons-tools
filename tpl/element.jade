@@ -10,5 +10,5 @@ core-iconset-svg(id=iconsetId iconsize=defaultIconSize)
   svg
     defs
       each g in glyphs
-        g(id=g['glyph-name'])
+        g(id=g.name transform="scale(" + g.scale + " -" + g.scale + ") translate(" + g.xMargin + " -448)" )
           path(d=g.d)

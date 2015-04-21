@@ -3,6 +3,7 @@ var http   = require('https');
 var fs     = require('fs');
 var xml2js = require('xml2js');
 
+
 function getSvgFont(font) {
   var promise = new Promise(function(resolve, reject) {
     http.get(font, function(res) {
@@ -20,6 +21,31 @@ function getSvgFont(font) {
   return promise;
 }
 
+var defaultWidth = 512;
+
+function formatGlyph (glyph) {
+  var scale = 1;
+  var xMargin = 0;
+
+  if (glyph['horiz-adv-x']) {
+    var customWidth = parseInt(glyph['horiz-adv-x']);
+
+    if (customWidth < defaultWidth) {
+      xMargin = (defaultWidth - customWidth) / 2;
+    }
+
+    if (customWidth > defaultWidth) {
+      scale = defaultWidth / customWidth;
+    }
+  }
+
+  glyph.xMargin = xMargin;
+  glyph.scale = scale;
+  glyph.name = glyph['glyph-name'];
+
+  return glyph;
+}
+
 function parseFont(data) {
   var parser = new xml2js.Parser();
   var glyphs = [];
@@ -30,7 +56,9 @@ function parseFont(data) {
         reject(err);
       } else {
         result.svg.defs[0].font[0].glyph.forEach(function(g) {
-          glyphs.push(g['$']);
+          var g = formatGlyph(g['$']);
+          console.log('core-icon(icon="ion:' + g.name + '")')
+          glyphs.push();
         });
         resolve(glyphs);
       }
@@ -45,8 +73,8 @@ function renderElement(locals) {
   var promise = new Promise(function (resolve, reject) {
     try {
       var res = tpl({
-        iconsetId: 'core-iconset-ionicons',
-        defaultIconSize: '25',
+        iconsetId: 'ion',
+        defaultIconSize: defaultWidth,
         glyphs: locals
       });
       resolve(res);
@@ -59,9 +87,11 @@ function renderElement(locals) {
 
 
 var font = "https://raw.githubusercontent.com/driftyco/ionicons/master/fonts/ionicons.svg";
-var log  = console.log.bind(console);
+var log  = console.error.bind(console);
 
 getSvgFont(font)
-  .then(parseFont, log)
-  .then(renderElement, log)
-  .then(log, log);
+  .then(parseFont)
+  .catch(log)
+  .then(renderElement)
+  .catch(log)
+  .then(console.log.bind(console));
