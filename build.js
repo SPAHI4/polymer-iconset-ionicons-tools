@@ -57,8 +57,8 @@ function parseFont(data) {
       } else {
         result.svg.defs[0].font[0].glyph.forEach(function(g) {
           var g = formatGlyph(g['$']);
-          console.log('core-icon(icon="ion:' + g.name + '")')
-          glyphs.push();
+          // console.log('core-icon(icon="ion:' + g.name + '")')
+          glyphs.push(g);
         });
         resolve(glyphs);
       }
@@ -87,11 +87,11 @@ function renderElement(locals) {
 
 
 var font = "https://raw.githubusercontent.com/driftyco/ionicons/master/fonts/ionicons.svg";
-var log  = console.error.bind(console);
+var onError = console.error.bind(console);
 
 getSvgFont(font)
   .then(parseFont)
-  .catch(log)
+  .catch(onError)
   .then(renderElement)
-  .catch(log)
+  .catch(onError)
   .then(console.log.bind(console));
