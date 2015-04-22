@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    //
+      Ionicons iconset demo
+      https://github.com/antono/polymer-iconset-ionicons
+
+    link(rel='import', href='polymer-iconset-ionicons.html')
+  
+  body
+    h1 Ionicons
+    each g in glyphs
+      core-icon(icon="ion:" + g.name)
