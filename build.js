@@ -3,6 +3,12 @@ var http   = require('https');
 var fs     = require('fs');
 var xml2js = require('xml2js');
 
+var tplName = process.argv[2];
+
+if (!tplName) {
+  console.error('Usage: build.js TEMPLATE_NAME');
+  process.exit();
+}
 
 function getSvgFont(font) {
   var promise = new Promise(function(resolve, reject) {
@@ -68,7 +74,7 @@ function parseFont(data) {
 }
 
 function renderElement(locals) {
-  var tpl = jade.compileFile(__dirname + '/tpl/element.jade', { pretty: true });
+  var tpl = jade.compileFile(__dirname + '/tpl/' + tplName + '.jade', { pretty: true });
 
   var promise = new Promise(function (resolve, reject) {
     try {
@@ -84,7 +90,6 @@ function renderElement(locals) {
   });
   return promise;
 }
-
 
 var font = "https://raw.githubusercontent.com/driftyco/ionicons/master/fonts/ionicons.svg";
 var onError = console.error.bind(console);
