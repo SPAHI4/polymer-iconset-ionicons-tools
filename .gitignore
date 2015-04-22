@@ -1,3 +1,4 @@
 src.svg
 node_modules/*
-out.html
+demo.html
+polymer-iconset-ionicons.html
