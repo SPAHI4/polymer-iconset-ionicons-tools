@@ -47,7 +47,7 @@ function formatGlyph (glyph) {
 
   glyph.xMargin = xMargin;
   glyph.scale = scale;
-  glyph.name = glyph['glyph-name'];
+  glyph.name = glyph['glyph-name'].replace('ion-','');
 
   return glyph;
 }
@@ -63,7 +63,6 @@ function parseFont(data) {
       } else {
         result.svg.defs[0].font[0].glyph.forEach(function(g) {
           var g = formatGlyph(g['$']);
-          // console.log('core-icon(icon="ion:' + g.name + '")')
           glyphs.push(g);
         });
         resolve(glyphs);
